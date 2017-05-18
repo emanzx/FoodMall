@@ -18,18 +18,13 @@
 //= require select2_simple_form
 //= require clipboard
 //= require bootstrap
+//= require sb-admin-2.js
+//= require metisMenu.js
 //= require turbolinks
 //= require_tree .
 
 
-// $(document).ready(function(){  
-  
-//   var clipboard = new Clipboard('.clipboard-btn');
-//   console.log(clipboard);
-	
-// });
-
 $( document ).on('turbolinks:load', function() {
   $('.select2_to').select2();
+  $('#side-menu').metisMenu();
 })
-

@@ -1,32 +1,124 @@
-<% if current_user.role.eql?('admin') %>
-	<ul id="sidebar" class="nav nav-stacked affix">
-		<li><%= link_to 'Dashboard', '/' %></li>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/"><font color="white">FoodMall</font></a>
+    </div>
+    <!-- /.navbar-header -->
+
+    <ul class="nav navbar-top-links navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-messages">
+                <li>
+                    <a href="#">
+                        <div>
+                            <strong>John Smith</strong>
+                            <span class="pull-right text-muted">
+                                <em>Yesterday</em>
+                            </span>
+                        </div>
+                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.dropdown-messages -->
+        </li>
+        <!-- /.dropdown -->
+        <li class="dropdown">
+          <% if current_user %>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-user fa-fw"></i> <%= current_user.username.upcase %> <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li><%= link_to ' Profile ', user_path(current_user.id), class: 'fa fa-user fa-fw' %></li>
+                <li><%= link_to ' Change Password ', change_password_path(:id => current_user.id), class: 'fa fa-gear fa-fw' %></li>
+                <li class="divider"></li>
+                <li><%= link_to " Logout ", '/logout', class: 'fa fa-sign-out fa-fw' %></li>
+            </ul>
+            <!-- /.dropdown-user -->
+          <% else %>
+            <li><%= link_to ' Login ', '/login' %></li>
+            <li class = "divider"></li>
+            <li><%= link_to ' Signup ', '/signup' %></li>
+          <% end %>
+        </li>
+        <!-- /.dropdown -->
+    </ul>
+    <!-- /.navbar-top-links -->
+
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+              <% if current_user.role.eql?('admin') %>
+                <li>
+                    <a href="/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-users fa-fw"></i> Manage User<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><%= link_to 'Customer', '/all_customer' %></li>
+                        <li><%= link_to 'Chef', '/all_chef' %></li>
+                        <li><%= link_to 'Runner', '/all_runner' %></li>
+                    </ul>
+                </li>
+                <li><%= link_to ' Products', items_path, class: 'fa fa-cubes' %></li>
+                <li>
+                    <a href="#"><i class="fa fa-files-o"></i> Order Items<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><%= link_to 'All Order Items', orderitems_path %></li>
+                        <li><%= link_to 'Selected User', '/view_orderitem' %></li>
+                        <li><%= link_to 'Make Order', '/admin_order' %></li>
+                    </ul>
+                </li>
+                <li><%= link_to ' New Worker & Customer', new_user_path, class: 'fa fa-plus-square' %></li>
+                <li><%= link_to ' Schedule Orders', '/template', class: 'fa fa-suitcase' %></li>
+              <% elsif current_user.role.eql?('runner') || current_user.role.eql?('chef') %>
+                <li><%= link_to 'My Task', '/my_task' %></li>
+              <% else %>
+                <li><a href="/cust_order">My Order Item</a></li>
+              <% end %>
+            </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+    </div>
+  <!-- /.navbar-static-side -->
+</nav>
+
+
+<!--   <ul id="sidebar" class="nav nav-stacked affix">
+    <li><%#= link_to 'Dashboard', '/' %></li>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Manage User <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><%= link_to 'Customer', '/all_customer' %></li>
-        <li><%= link_to 'Chef', '/all_chef' %></li>
-        <li><%= link_to 'Runner', '/all_runner' %></li>
+        <li><%#= link_to 'Customer', '/all_customer' %></li>
+        <li><%#= link_to 'Chef', '/all_chef' %></li>
+        <li><%#= link_to 'Runner', '/all_runner' %></li>
       </ul>
     </li>
-		<li><%= link_to 'Products', items_path %></li>
-		<li class="dropdown">
+    <li><%#= link_to 'Products', items_path %></li>
+    <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Order Items <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <li><%= link_to 'All Order Items', orderitems_path %></li>
-        <li><%= link_to 'Selected User', '/view_orderitem' %></li>
-        <li><%= link_to 'Make Order', '/admin_order' %></li>
+        <li><%#= link_to 'All Order Items', orderitems_path %></li>
+        <li><%#= link_to 'Selected User', '/view_orderitem' %></li>
+        <li><%#= link_to 'Make Order', '/admin_order' %></li>
       </ul>
     </li>
-		<li><%= link_to 'New Worker & Customer', new_user_path %></li>
-		<li><%= link_to 'Schedule Orders', '/template' %></li>	
-	</ul>
-<% elsif current_user.role.eql?('runner') || current_user.role.eql?('chef') %>
-	<ul id="sidebar" class="nav nav-stacked affix">
-		<li><%= link_to 'My Task', '/my_task' %></li>
-	</ul>
-<% else %>
+    <li><%#= link_to 'New Worker & Customer', new_user_path %></li>
+    <li><%#= link_to 'Schedule Orders', '/template' %></li>  
+  </ul>
+<%# elsif current_user.role.eql?('runner') || current_user.role.eql?('chef') %>
+  <ul id="sidebar" class="nav nav-stacked affix">
+    <li><%#= link_to 'My Task', '/my_task' %></li>
+  </ul>
+<%# else %>
 <ul id="sidebar" class="nav nav-stacked affix">
-	<li><a href="/cust_order">My Order Item</a></li>
-</ul>
-<% end %>
+  <li><a href="/cust_order">My Order Item</a></li>
+</ul> -->
