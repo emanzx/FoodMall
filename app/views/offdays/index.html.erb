@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h2>Business Closed</h2><br>
+
+<table class="table">
+  <thead>
+    <tr class="info">
+      <th><%= sort_link @search, :date_off, "Date" %></th>
+      <th>Day</th>
+      <th>Note</th>
+      <th> </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @offdays.each do |offday| %>
+      <tr>
+        <td><%= offday.date_off %></td>
+        <td><%= offday.date_off.strftime("%A") %></td>
+        <td><%= offday.note %></td>
+        <td><%= link_to '', offday, method: :delete, data: { confirm: 'Are you sure?' }, class: 'glyphicon glyphicon-trash' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @users %>
+
+<br>
+<%= link_to 'Add New', new_offday_path, class: "btn btn-primary" %>

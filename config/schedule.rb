@@ -18,7 +18,7 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
-every 1.day, :at => '1:00 pm' do
+every 1.day, :at => '3:27 pm' do
   runner "OrderCron.cron_job", :environment => 'development'
 end
 

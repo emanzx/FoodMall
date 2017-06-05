@@ -5,11 +5,14 @@
   <p>
   	<%= f.label :user_username_cont, "Customer Name" %>
   	<%= f.text_field :user_username_cont %>
-  	<%= f.submit %> <span style="padding-left:490px;"><%= link_to 'Add Template', new_template_path, class: "btn btn-primary" %></span>
+  	<%= f.submit %>
   </p>
  <% end %>
-
- <p></p>
+ <div class="setting">
+    <%= link_to 'Add Template', new_template_path, class: "btn btn-primary" %>
+    <%= link_to 'Off Days', offdays_path, class: "btn btn-primary" %>
+ </div>
+ <br>
 
 <p style="font-size:70%;"> ** click the day to make manual cron jobs ** </p>
 

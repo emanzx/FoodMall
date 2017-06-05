@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date off:</strong>
+  <%= @offday.date_off %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @offday.note %>
+</p>
+
+<%= link_to 'Edit', edit_offday_path(@offday) %> |
+<%= link_to 'Back', offdays_path %>

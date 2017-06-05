@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605043259) do
+ActiveRecord::Schema.define(version: 20170605065034) do
 
   create_table "items", force: :cascade do |t|
     t.string   "name"
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 20170605043259) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+  end
+
+  create_table "offdays", force: :cascade do |t|
+    t.date     "date_off"
+    t.text     "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "orderitems", force: :cascade do |t|

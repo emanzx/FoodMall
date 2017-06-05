@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :offdays
   require 'sidekiq/web'
   mount Sidekiq::Web => '/cron_sidekiq'
   
