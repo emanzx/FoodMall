@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get '/all_customer' => 'users#all_customer'
   get '/all_chef' => 'users#all_chef'
   get '/all_runner' => 'users#all_runner'
+  get '/admin_list' => 'users#all_user'
   get '/change_password' => 'users#change_password'
   put '/update_password' => 'users#update_password'
 

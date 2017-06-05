@@ -58,7 +58,9 @@
             <ul class="nav" id="side-menu">
               <% if current_user.role.eql?('admin') %>
                 <li>
-                    <a href="/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    <%= link_to '/' do %>
+                    <i class="fa fa-dashboard fa-fw"></i> Dashboard
+                    <% end -%>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-users fa-fw"></i> Manage User<span class="fa arrow"></span></a>
@@ -66,9 +68,14 @@
                         <li><%= link_to 'Customer', '/all_customer' %></li>
                         <li><%= link_to 'Chef', '/all_chef' %></li>
                         <li><%= link_to 'Runner', '/all_runner' %></li>
+                        <li><%= link_to 'Admin', '/admin_list' %></li>
                     </ul>
                 </li>
-                <li><%= link_to ' Products', items_path, class: 'fa fa-cubes' %></li>
+                <li>
+                    <%= link_to items_path do %>
+                    <i class="fa fa-cubes"></i> Products
+                    <% end -%>
+                </li>
                 <li>
                     <a href="#"><i class="fa fa-files-o"></i> Order Items<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -77,8 +84,16 @@
                         <li><%= link_to 'Make Order', '/admin_order' %></li>
                     </ul>
                 </li>
-                <li><%= link_to ' New Worker & Customer', new_user_path, class: 'fa fa-plus-square' %></li>
-                <li><%= link_to ' Schedule Orders', '/template', class: 'fa fa-suitcase' %></li>
+                <li>
+                    <%= link_to new_user_path do %>
+                    <i class="fa fa-plus-square"></i> New Worker & Customer
+                    <% end -%>
+                </li>
+                <li>
+                  <%= link_to '/template' do %>
+                    <i class="fa fa-suitcase"></i> Schedule Orders
+                  <% end -%>  
+                </li>
               <% elsif current_user.role.eql?('runner') || current_user.role.eql?('chef') %>
                 <li><%= link_to 'My Task', '/my_task' %></li>
               <% else %>

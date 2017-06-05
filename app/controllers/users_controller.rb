@@ -35,6 +35,17 @@ class UsersController < ApplicationController
     @users = @search.result.paginate(:per_page => 15, :page => params[:page])
   end
 
+  def all_user
+    unless current_user.role.eql?('admin')
+      flash[:danger] = "You don't have access to that Page!"
+      redirect_to '/'
+      return
+    end
+    @search = User.where(role: 'admin').ransack(params[:q])
+    @search.sorts = 'created_at desc' if @search.sorts.empty?
+    @user = @search.result.paginate(:per_page => 15, :page => params[:page])
+  end
+
   def all_chef
     unless current_user.role.eql?('admin')
       flash[:danger] = "You don't have access to that Page!"
@@ -173,21 +184,45 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     role = @user.role
-    @user.destroy
-    respond_to do |format|
-      flash[:success] = 'User was successfully destroyed.'
-      if role == "customer"
-        format.html { redirect_to '/all_customer' }
-        format.json { head :no_content }
-      elsif role == "chef"
-        format.html { redirect_to '/all_chef' }
-        format.json { head :no_content }
-      elsif role == "runner"
-        format.html { redirect_to '/all_runner' }
-        format.json { head :no_content }
+    if current_user.admin == true
+      @user.destroy
+      respond_to do |format|
+        flash[:success] = 'User was successfully destroyed.'
+        if role == "customer"
+          format.html { redirect_to '/all_customer' }
+          format.json { head :no_content }
+        elsif role == "chef"
+          format.html { redirect_to '/all_chef' }
+          format.json { head :no_content }
+        elsif role == "runner"
+          format.html { redirect_to '/all_runner' }
+          format.json { head :no_content }
+        else
+          format.html { redirect_to '/' }
+          format.json { head :no_content }
+        end
+      end
+    else
+      if @user.admin == true
+        redirect_to '/admin_list'
       else
-        format.html { redirect_to '/' }
-        format.json { head :no_content }
+        @user.destroy
+        respond_to do |format|
+          flash[:success] = 'User was successfully destroyed.'
+          if role == "customer"
+            format.html { redirect_to '/all_customer' }
+            format.json { head :no_content }
+          elsif role == "chef"
+            format.html { redirect_to '/all_chef' }
+            format.json { head :no_content }
+          elsif role == "runner"
+            format.html { redirect_to '/all_runner' }
+            format.json { head :no_content }
+          else
+            format.html { redirect_to '/' }
+            format.json { head :no_content }
+          end
+        end
       end
     end
   end
